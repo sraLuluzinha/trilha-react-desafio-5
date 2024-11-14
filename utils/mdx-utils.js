@@ -1,19 +1,27 @@
-import { api } from '../services/api'
+import { api } from '../services/api';
 
 export const getPosts = async () => {
-    const {data} = await api.get('/posts'); 
+    const { data } = await api.get('/posts');
 
-    if(data){
+    if (data) {
         return data;
     }
 
-    return []
+    return [];
 }
 
 export const getPostBySlug = async (id) => {
+    try {
+        // Faz a requisição para buscar o post específico usando o ID
+        const { data } = await api.get(`/posts/${id}`);
 
-    //TODO: BUSCAR UM POST EM ESPECIFICO.
-    //const {data} = await api.get(`/post?id=eq.${id}`)
+        if (data) {
+            return data;
+        }
 
-    return {}
-}
+        return {};
+    } catch (error) {
+        console.error("Erro ao buscar o post:", error);
+        return {};
+    }
+};
